@@ -1,6 +1,6 @@
 function App() {
   const x = 23;
-  return <div>hellow vite !</div>;
+  return <div>hello vite !</div>;
 }
 
 export default App;
