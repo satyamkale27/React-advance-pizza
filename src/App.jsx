@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         path: "/menu",
         element: <Menu />,
         loader: menuLoader, // passes the data to page // // data fetching done in router and not in componrnt //
-        errorElement: <Error />, // error handling in this route in the layout //
+        errorElement: <Error />, // error handling in this route in the layout // if it is not handeled here error will bubble in parent route that is <AppLayout/> //
       },
       {
         path: "/cart",
