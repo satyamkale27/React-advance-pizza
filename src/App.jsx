@@ -19,7 +19,7 @@ const router = createBrowserRouter([
       {
         path: "/menu",
         element: <Menu />,
-        loader: menuLoader,
+        loader: menuLoader, // passes the data to page // // data fetching done in router and not in componrnt //
       },
       {
         path: "/cart",
