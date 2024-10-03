@@ -8,7 +8,7 @@ import AppLayout from "./ui/AppLayout";
 
 const router = createBrowserRouter([
   {
-    element: <AppLayout />, // no path this is layoutroute provides layout //
+    element: <AppLayout />, // no path this is layoutroute  //
     children: [
       // children routes (nested routes) //
 
