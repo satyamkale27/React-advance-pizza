@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Form } from "react-router-dom";
+import { Form, redirect } from "react-router-dom";
+import { createOrder } from "../services/apiRestaurant";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -71,6 +72,7 @@ function CreateOrder() {
         </div>
 
         <div>
+          <input type="hidden" name="cart" value={JSON.stringify(cart)} />
           <button>Order now</button>
         </div>
       </Form>
@@ -82,8 +84,16 @@ export async function action({ request }) {
   // request submitted by form intercepted here //
   const formData = await request.formData(); // browser api //
   const data = Object.fromEntries(formData); // converts to object //
-  console.log(data);
-  return null;
+
+  const order = {
+    // spread operator and overwriting the data //
+    ...data,
+    cart: JSON.parse(data.cart),
+    priority: data.priority === "on",
+  };
+  const newOrder = await createOrder(order);
+  return redirect(`/order/${newOrder.id}`);
+  // redirect used insted of useNavigate() becuase useNavigate() cannot used in function, only used in conponents //
 }
 
 export default CreateOrder;
