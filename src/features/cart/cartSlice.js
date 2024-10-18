@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  //   cart: [],
-  cart: [
-    {
-      pizzaId: 12,
-      name: "Mediterranean",
-      quantity: 2,
-      unitPrice: 16,
-      totalprice: 32,
-    },
-  ],
+  cart: [],
+  // cart: [
+  //   {
+  //     pizzaId: 12,
+  //     name: "Mediterranean",
+  //     quantity: 2,
+  //     unitPrice: 16,
+  //     totalprice: 32,
+  //   },
+  // ],
 };
 
 const cartSlice = createSlice({
@@ -48,3 +48,9 @@ export const {
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+export const getTotalCartQuantity = (state) =>
+  state.cart.cart.reduce((sum, item) => sum + item.quantity, 0); // reduce method used only on array //  // redux reccomends to do this kind of data manipulation, right indide the selector function, and out outside the function // it is also good practice to do this in slice like here caerSlice //
+
+export const getTotalCartPrice = (state) =>
+  state.cart.cart.reduce((sum, item) => sum + item.totalprice, 0);
