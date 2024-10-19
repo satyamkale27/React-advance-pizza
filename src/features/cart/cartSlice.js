@@ -56,3 +56,17 @@ export const getTotalCartQuantity = (state) =>
 
 export const getTotalCartPrice = (state) =>
   state.cart.cart.reduce((sum, item) => sum + item.totalprice, 0);
+
+export const getCurrentQuantityById = (id) => (state) =>
+  state.cart.cart.find((item) => item.pizzaId === id)?.quantity ?? 0;
+
+// ***************************** more explanition ***************************************** //
+/*
+What .find() Does:
+.find() will return the first item for which the condition item.pizzaId === id evaluates to true.
+If no such item exists (i.e., if the condition is false for every item in the array), then .find() will return undefined.
+
+The ?. is an optional chaining operator. It safely accesses the quantity property of the found item (if the item is undefined, it won’t throw an error).
+The ?? is the nullish coalescing operator, which returns the right-hand side value (0) if the left-hand side (quantity) is null or undefined. In this case, if no item is found, it defaults the quantity to 0.
+
+*/
