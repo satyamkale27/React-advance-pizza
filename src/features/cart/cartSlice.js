@@ -32,6 +32,7 @@ const cartSlice = createSlice({
       const item = state.cart.find((item) => item.pizzaId === action.payload);
       item.quantity--; // in redux we dont have to use ...(spread)operator to mutate any quantity or element in state, we can directly mutate it//
       item.totalprice = item.quantity * item.unitPrice;
+      if (item.quantity === 0) cartSlice.caseReducers.deleteItem(state, action); // if there is 0 quantity of that item in the cart then delete that item from cart //
     },
     clearCart(state) {
       state.cart = [];
@@ -48,6 +49,8 @@ export const {
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+//   here we are not mutating the state only geting it by appliying sonme criteria //
 
 export const getCart = (state) => state.cart.cart; // we made getcart for reusibility purpose and if use have to make changes we can make directly here insted of changing in all files //
 
