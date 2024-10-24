@@ -1,16 +1,26 @@
 // Test ID: IIDSAT
 import OrderItem from "./OrderItem";
-import { useLoaderData } from "react-router-dom";
+import { useFetcher, useLoaderData } from "react-router-dom";
 import { getOrder } from "../services/apiRestaurant";
 import {
   calcMinutesLeft,
   formatCurrency,
   formatDate,
 } from "../utlities/helpers";
+import { useEffect } from "react";
 
 function Order() {
   const order = useLoaderData(); // data comming from loader at App.jsx //
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
+
+  const fetcher = useFetcher(); // to get data from another page without visiting to it this hook is used //
+  useEffect(
+    function () {
+      if (!fetcher.data && fetcher.state === "idle") fetcher.load("/menu");
+    },
+    [fetcher],
+  ); // useEffect fetches data when the component mounts //
+
   const {
     id,
     status,
@@ -52,7 +62,15 @@ function Order() {
 
       <ul className="divide-y-2 divide-stone-200 border-b border-t">
         {cart.map((item) => (
-          <OrderItem item={item} key={item.pizzaId} />
+          <OrderItem
+            item={item}
+            key={item.pizzaId}
+            isLoadingIngredients={fetcher.state === "loading"}
+            ingredients={
+              fetcher?.data?.find((el) => el.id === item.pizzaId)
+                ?.ingredients ?? []
+            }
+          />
         ))}
       </ul>
 
